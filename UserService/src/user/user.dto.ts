@@ -1,7 +1,6 @@
-import { IsEmail, IsOptional, IsString } from "class-validator"
+import { IsEmail, IsNumber, IsOptional, IsString } from "class-validator"
 
 export class UserDto {
-
     @IsString()
     @IsOptional()
     email: string
@@ -9,4 +8,12 @@ export class UserDto {
     @IsEmail()
     @IsOptional()
     name: string
+}
+
+export class QueryDto {
+    @IsNumber()
+    page: number
+
+    @IsNumber()
+    pageSize: number
 }

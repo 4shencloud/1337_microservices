@@ -10,6 +10,9 @@ export class User {
 
     @Prop({ type: String })
     name: string
+
+    @Prop({ type: Boolean })
+    isDeleted: boolean
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
