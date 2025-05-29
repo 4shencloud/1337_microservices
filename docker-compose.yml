@@ -10,6 +10,11 @@ services:
     depends_on:
       - mongo
       - rabbitmq
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   user-service:
     build:
@@ -22,6 +27,11 @@ services:
     depends_on:
       - mongo
       - rabbitmq
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   rabbitmq:
     image: rabbitmq:latest
