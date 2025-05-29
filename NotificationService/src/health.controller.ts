@@ -3,7 +3,6 @@ import {
   HealthCheckService,
   HealthCheck,
   HttpHealthIndicator,
-  MongooseHealthIndicator,
 } from '@nestjs/terminus';
 import { RabbitMQHealthIndicator } from './rabbitmq.health';
 
@@ -11,7 +10,6 @@ import { RabbitMQHealthIndicator } from './rabbitmq.health';
 export class HealthController {
   constructor(
     private health: HealthCheckService,
-    private mongoose: MongooseHealthIndicator,
     private http: HttpHealthIndicator,
     private rabbit: RabbitMQHealthIndicator,
   ) {}
@@ -20,7 +18,6 @@ export class HealthController {
   @HealthCheck()
   async check() {
     const results = await this.health.check([
-      () => this.mongoose.pingCheck('mongo'),
       () => this.http.pingCheck('self', 'http://localhost:6001'),
       this.rabbit.checkRabbitMQ(),
     ]);

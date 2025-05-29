@@ -64,16 +64,16 @@ export class UserController {
     }
   }
 
-  @Delete("")
-  async deleteUser(@Body() dto: UserDto) {
+  @Delete("/:_id")
+  async deleteUser(@Param('_id') _id: string) {
     try {
-      const result = await this.userService.deleteUser(dto);
+      const deletedUser = await this.userService.deleteUser(_id);
 
-      if (result) {
-        this.client.emit('user.deleted', { email: dto.email });
+      if (deletedUser) {
+        this.client.emit('user.deleted', { email: deletedUser.email });
       }
 
-      return { success: result };
+      return { success: 1 };
     } catch (e) {
       return this.handleError(e);
     }

@@ -28,7 +28,10 @@ export class UserService {
     this.logger.debug("updateUser hit");
 
     const newUser = await this.userModel.findByIdAndUpdate(_id, {
-      email, name
+      $set: {
+        email,
+        name
+      }
     }, { new: true, runValidators: true });
 
     return newUser;
@@ -62,31 +65,24 @@ export class UserService {
     return { users, totalCount };
   }
 
-  async deleteUser({ name, email }: UserArg): Promise<number> {
+  async deleteUser(_id: string | ObjectId): Promise<UserDocument | null> {
     this.logger.debug("deleteUser hit");
 
-    const query: any = {};
+    const existing = await this.userModel.findById(_id);
 
-    if (name) {
-      query.name = name;
-    } else if (email) {
-      query.email = email;
-    } else {
-      throw new Error("no query");
+    if (existing) {
+      if (!existing.isDeleted) {
+        await this.userModel.updateOne({ _id }, {
+          $set: {
+            isDeleted: true
+          }
+        });
+        return existing;
+      } else {
+        return null;
+      }
     }
 
-    const existing = await this.userModel.findOne(query);
-
-    if (existing && !existing.isDeleted) {
-      await this.userModel.updateOne(query, {
-        $set: {
-          isDeleted: true
-        }
-      });
-
-      return 1;
-    }
-
-    return 0;
+    return null;
   }
 }
