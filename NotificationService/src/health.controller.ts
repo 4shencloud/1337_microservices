@@ -18,7 +18,7 @@ export class HealthController {
   @HealthCheck()
   async check() {
     const results = await this.health.check([
-      () => this.http.pingCheck('self', 'http://localhost:6001'),
+      () => this.http.pingCheck('self', 'http://localhost:6001/ping'),
       this.rabbit.checkRabbitMQ(),
     ]);
 

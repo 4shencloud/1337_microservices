@@ -1,10 +1,15 @@
-import { Controller } from '@nestjs/common'
+import { Controller, Get } from '@nestjs/common'
 import { EventPattern } from '@nestjs/microservices';
 
 @Controller()
 export class AppController {
   constructor(
   ) {}
+
+  @Get("/ping")
+  getPing() {
+    return { status: 'pong' }
+  }
 
   @EventPattern("user.created")
   handleUserCreated(data: any) {
