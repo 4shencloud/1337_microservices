@@ -2,11 +2,11 @@ import { Type } from "class-transformer";
 import { IsEmail, IsNumber, IsOptional, IsString } from "class-validator"
 
 export class UserDto {
-    @IsString()
+    @IsEmail()
     @IsOptional()
     email: string
 
-    @IsEmail()
+    @IsString()
     @IsOptional()
     name: string
 }
