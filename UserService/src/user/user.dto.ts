@@ -12,8 +12,10 @@ export class UserDto {
 
 export class QueryDto {
     @IsNumber()
+    @IsOptional()
     page: number
 
     @IsNumber()
+    @IsOptional()
     pageSize: number
 }
