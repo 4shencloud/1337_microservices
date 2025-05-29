@@ -1,6 +1,5 @@
 import { Controller, Post, Body, Get, Param, Request, UseGuards, Req, Res } from '@nestjs/common'
 import { AppService } from './app.service'
-import { QueryDto, TestDto } from './main.dto'
 import { UserService } from './user/user.service'
 import { UserDocument } from './user/user.schema'
 
@@ -14,14 +13,6 @@ export class AppController {
   @Get("/ping")
   getPing(): string {
     return this.appService.getPing()
-  }
-
-  @Post('/stripe/checkout')
-  async createSession(@Request() req, @Body() body: { productId: string }) {
-    const { productId } = body
-
-
-    return {  }
   }
 }
 
