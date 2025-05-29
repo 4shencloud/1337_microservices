@@ -1,3 +1,4 @@
+import { Type } from "class-transformer";
 import { IsEmail, IsNumber, IsOptional, IsString } from "class-validator"
 
 export class UserDto {
@@ -11,11 +12,13 @@ export class UserDto {
 }
 
 export class QueryDto {
-    @IsNumber()
-    @IsOptional()
-    page: number
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  page: number;
 
-    @IsNumber()
-    @IsOptional()
-    pageSize: number
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  pageSize: number;
 }

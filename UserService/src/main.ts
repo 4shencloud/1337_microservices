@@ -9,7 +9,6 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe())
   app.useGlobalFilters(new HttpExceptionFilter())
   app.enableCors()
-  app.use('/stripe/webhook', express.raw({ type: 'application/json' }))
-  await app.listen(process.env.PORT ?? 4000)
+  await app.listen(process.env.PORT ?? 6002)
 }
 bootstrap()

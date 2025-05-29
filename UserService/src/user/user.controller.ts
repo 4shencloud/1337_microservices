@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Delete, Inject } from "@nestjs/common";
+import { Controller, Get, Post, Body, Delete, Inject, Query } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { UserService } from "./user.service";
 import { QueryDto, UserDto } from "./user.dto";
@@ -42,16 +42,16 @@ export class UserController {
   }
 
   @Get("")
-  async getUsers(@Body() dto: QueryDto) {
+  async getUsers(@Query() dto: QueryDto) {
     const { page = 1, pageSize = 10 } = dto;
 
-    const { users, totalCount } = await this.userService.queryUsers(page, pageSize);
-    const totalPages = Math.ceil(totalCount / pageSize);
+    const { users, totalCount } = await this.userService.queryUsers(+page, +pageSize);
+    const totalPages = Math.ceil(totalCount / +pageSize);
 
     return {
       success: 1,
       data: {
-        pageSize,
+        pageSize: +pageSize,
         totalCount,
         totalPages,
         users,
